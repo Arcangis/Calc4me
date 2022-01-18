@@ -34,14 +34,14 @@ body {
 /* calculator container */
 
 .calculator-container {
-    flex: 0 1 450px;
+    flex: 0 1 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: space-between;
     gap: .5em;
     max-height: 98%;
-    max-width: 90%;
+    max-width: 95%;
     font-family: 'Notable', verdana, sans-serif;
     background: rgb(204, 204, 204);
     border: 10px solid black;
@@ -58,7 +58,7 @@ body {
 }
 
 .calculator-face img{
-    width: 50%;
+    width: 40%;
     filter: brightness(.8);
 }
 
@@ -74,10 +74,11 @@ body {
 
 .display {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    height: 2.8em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: .3em;
+    height: 5em;
     max-width: 100%;
     color: rgb(240, 240, 240);
     background-image: url("../image/display.png");
@@ -87,6 +88,10 @@ body {
     border: 3px solid black;
     border-radius: 10px;
     overflow: hidden;
+}
+
+#display-current {
+    font-size: 1.8em;
 }
 
 /* calculator buttons */
@@ -129,6 +134,9 @@ body {
 .ft-2-m button, .in-2-cm button{
     background-color: #F2D8CC;
     width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .double-arrow {

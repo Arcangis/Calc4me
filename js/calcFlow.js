@@ -49,7 +49,7 @@ let hasPlusMinus=false;
 let floatDigitCount=0;
 let maxFloatDigit = 5;
 let inputDigitCount=0;
-let maxInputDigit = 10;
+let maxInputDigit = 9;
 let maxExponentialDigit = 2;
 class calculatorInput {
 

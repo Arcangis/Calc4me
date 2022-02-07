@@ -51,9 +51,11 @@ function buttonListenner(){
 let rightDisplayPosition = function (event) {displayBoundaries(true)};
 let leftDisplayPosition = function (event) {displayBoundaries(false)};
 
-let addButtonOperation = function (event) { userInput = new calculatorInput(event.currenTarget.textContent,event.currenTarget.className,event.currenTarget.id);
-                                  faceRamdomnizer(true); executeOperation(userInput); }
-
+let addButtonOperation = function (event) { if (event.target.id == "back-img")
+    userInput = new calculatorInput(event.target.parentElement.textContent,event.target.parentElement.className,event.target.parentElement.id);
+    else userInput = new calculatorInput(event.target.textContent,event.target.className,event.target.id);     
+    faceRamdomnizer(true); executeOperation(userInput); }
+  
 function soundOnOff(){
 
     soundOn = !soundOn;

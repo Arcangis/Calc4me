@@ -86,3 +86,5 @@ window.onload = function(){
     buttonListenner();
  
 }
+
+export {faceRamdomnizer};

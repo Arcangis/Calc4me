@@ -1,3 +1,5 @@
+import {faceRamdomnizer} from "./script.js";
+
 // list of operations
 
 let operationNameList = ["add","subtract","multiply","divide","percentual","exponential","factorial","roots","ft2m","m2ft","in2cm","cm2in"];
@@ -31,8 +33,10 @@ cm2in = (n1) => { return n1/3.54; }];
 
 // operation variables
 
+let displayHistory;
 let display = new Array();
 let historyArray = new Array();
+let historyArrayLenght;
 let state = 0;
 let firstNumber;
 let secondNumber;
@@ -43,9 +47,10 @@ let currentDisplayData;
 let hasPoint=false;
 let hasPlusMinus=false;
 let floatDigitCount=0;
-let maxFloatDigit = 2;
+let maxFloatDigit = 5;
 let inputDigitCount=0;
 let maxInputDigit = 10;
+let maxExponentialDigit = 2;
 class calculatorInput {
 
     constructor(value,type,id=null) {
@@ -62,10 +67,19 @@ class calculatorInput {
 
     static limitFloatNumbers(number){
 
-        if (Number.isInteger(number))
-            return number;
-        else
+        if (!Number.isInteger(number))
             return number.toFixed(maxFloatDigit);
+
+        return number;
+
+    }
+
+    static exponentiateNumbers(number){
+
+        if (number.toString().length >= 9)
+            return parseFloat(number).toExponential(maxExponentialDigit);
+
+        return parseFloat(number);
 
     }
 
@@ -76,7 +90,7 @@ class calculatorInput {
         if (value === null)
             return new calculatorInput( "ERROR","Error");
             
-        return new calculatorInput( this.limitFloatNumbers(value), numberArray.type);
+        return new calculatorInput( this.exponentiateNumbers(this.limitFloatNumbers(value)), numberArray.type);
 
     }
 
@@ -87,7 +101,7 @@ class calculatorInput {
         if (value === null)
             return new calculatorInput( "ERROR","Error");
 
-        return new calculatorInput( this.limitFloatNumbers(value),firstNumArray.type);
+        return new calculatorInput( this.exponentiateNumbers(this.limitFloatNumbers(value)),firstNumArray.type);
 
     }
 
@@ -135,17 +149,12 @@ function executeOperation(input){
     if (input.id == "clear"){
         calculatorInput.clearAll();
         putOnScreen(currentDisplayData);
-    }
-        
 
-    else if (input.id == "backspace"){
+    } else if (input.id == "backspace"){
         historyArray.pop();
         let newHistoryArray = historyArray;
         calculatorInput.clearAll();
-        
-        if (historyArray.length == 0)
-            putOnScreen(currentDisplayData);
-        
+        putOnScreen(currentDisplayData);  
         newHistoryArray.forEach( input => operationFlow(input));
 
     } else 
@@ -329,13 +338,32 @@ function operationFlow(input){
 
 function putOnScreen(currentDisplayData){
     
-    document.querySelector("#display-history").textContent = display;
+    if (historyArrayLenght != historyArray.length){
+        if (historyArray.length != 0){
+            formatScreenFunction(historyArray.at(-1));
+            displayHistory = display.join("");
+        } else 
+             displayHistory = "0";
+    }
+    
+    document.querySelector("#display-history").textContent = displayHistory;
 
     if (currentDisplayData === "ERROR")
         faceRamdomnizer(false);
 
     document.querySelector("#display-current").textContent = currentDisplayData;
-       
+
+    historyArrayLenght = historyArray.length;
+    
+    function formatScreenFunction(array){
+        if ( ["roots","ft2m","m2ft","in2cm","cm2in"].indexOf(array.id) != -1){
+            display.unshift("(");
+            display.unshift(array.value);
+            display.push(")");    
+        } else 
+            display.push(array.value);
+    }
+
 }
 
 export {executeOperation};

@@ -51,7 +51,7 @@ function buttonListenner(){
 let rightDisplayPosition = function (event) {displayBoundaries(true)};
 let leftDisplayPosition = function (event) {displayBoundaries(false)};
 
-let addButtonOperation = function (event) { userInput = new calculatorInput(event.target.textContent,event.target.className,event.target.id);
+let addButtonOperation = function (event) { userInput = new calculatorInput(event.currenTarget.textContent,event.currenTarget.className,event.currenTarget.id);
                                   faceRamdomnizer(true); executeOperation(userInput); }
 
 function soundOnOff(){

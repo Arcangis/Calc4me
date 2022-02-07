@@ -33,7 +33,7 @@ cm2in = (n1) => { return n1/3.54; }];
 
 // operation variables
 
-let displayHistory;
+let displayHistory = new Array();
 let display = new Array();
 let historyArray = new Array();
 let historyArrayLenght;
@@ -47,10 +47,15 @@ let currentDisplayData;
 let hasPoint=false;
 let hasPlusMinus=false;
 let floatDigitCount=0;
-let maxFloatDigit = 5;
+let maxFloatDigit = 4;
 let inputDigitCount=0;
-let maxInputDigit = 9;
-let maxExponentialDigit = 2;
+let maxInputDigit = 10;
+let maxExponentialDigit = 4;
+let maxDisplayDigit = 20;
+let displayPosition = 0;
+let lowerBoundary;
+let upperBoundary;
+       
 class calculatorInput {
 
     constructor(value,type,id=null) {
@@ -336,8 +341,18 @@ function operationFlow(input){
     putOnScreen(currentDisplayData);
 }
 
-function putOnScreen(currentDisplayData){
+
+function putOnScreen(currentDisplayData){    
+
+    historyData();
+    displayData(currentDisplayData);
+
+    historyArrayLenght = historyArray.length;
     
+}
+
+function historyData(){
+
     if (historyArrayLenght != historyArray.length){
         if (historyArray.length != 0){
             formatScreenFunction(historyArray.at(-1));
@@ -346,15 +361,8 @@ function putOnScreen(currentDisplayData){
              displayHistory = "0";
     }
     
-    document.querySelector("#display-history").textContent = displayHistory;
+    document.querySelector("#display-history").textContent = sliceDisplay(displayHistory);
 
-    if (currentDisplayData === "ERROR")
-        faceRamdomnizer(false);
-
-    document.querySelector("#display-current").textContent = currentDisplayData;
-
-    historyArrayLenght = historyArray.length;
-    
     function formatScreenFunction(array){
         if ( ["roots","ft2m","m2ft","in2cm","cm2in"].indexOf(array.id) != -1){
             display.unshift("(");
@@ -364,7 +372,45 @@ function putOnScreen(currentDisplayData){
             display.push(array.value);
     }
 
+    function sliceDisplay(displayArray){
+        
+        lowerBoundary = displayHistory.length-maxDisplayDigit+displayPosition;
+        upperBoundary = displayHistory.length+displayPosition;
+
+        if (displayArray.length>maxDisplayDigit){
+        
+            return displayArray.slice(lowerBoundary,upperBoundary);
+        }
+
+        return displayArray;
+
+    }
+
 }
 
+function displayData(currentDisplayData){
+
+    if (currentDisplayData === "ERROR")
+        faceRamdomnizer(false);
+
+    document.querySelector("#display-current").textContent = currentDisplayData;
+
+}
+
+function displayBoundaries(isIncrement){
+
+    lowerBoundary = displayHistory.length-maxDisplayDigit+displayPosition;
+    upperBoundary = displayHistory.length+displayPosition;
+
+    if (isIncrement && upperBoundary < historyArray.length)
+        displayPosition += 1;
+    else if (!isIncrement && lowerBoundary >0)
+        displayPosition -= 1
+    
+    historyData();
+        
+}
+
+export {displayBoundaries};
 export {executeOperation};
 export {calculatorInput};

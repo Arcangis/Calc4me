@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="./css/style.css">
     <script type="module" src="./js/script.js"></script>
     <script type="module" src="./js/calcFlow.js"></script>
-    <!-- link to custom font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
-    <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
 </head>
 <body>
     <audio id="beep">
@@ -26,7 +22,13 @@
                 <div class="calculator-body">
                     <div class="display">
                         <div id="display-history">0</div>
-                        <div id="display-current">0</div>
+                        <div id="display-bottom">
+                            <div id="display-arrows">
+                                <button id="left"><img src="./image/left.png"></button>
+                                <button id="right"><img src="./image/right.png"></button>
+                            </div>
+                            <div id="display-current">0</div>
+                        </div>
                     </div>
                     <div class="grid-container">
                         <div class="ft-2-m">

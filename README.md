@@ -6,6 +6,7 @@ A simple calculator with:
 * conversion units: feet, meter, inches, centimeter;
 * non-integer handling;
 * overflow handling;
+* keyboard support;
 * delete inputs;
 # Flowchart  
 Superficial flowchart of the process.
